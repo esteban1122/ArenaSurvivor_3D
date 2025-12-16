@@ -1,0 +1,49 @@
+[gd_scene load_steps=10 format=3 uid="uid://b1licilgdjyhr"]
+
+[ext_resource type="Script" uid="uid://bu7h8g7ysequd" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://1ao4e7r6onpc" path="res://enemy.tscn" id="2_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://isu6uu1gk85i" path="res://player.tscn" id="3_lquwl"]
+[ext_resource type="PackedScene" uid="uid://dtvvrg6e7ccoi" path="res://game_ui.tscn" id="4_1bvp3"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7mycd"]
+size = Vector2(5000, 5000)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_272bh"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h2yge"]
+
+[sub_resource type="Sky" id="Sky_1bvp3"]
+sky_material = SubResource("ProceduralSkyMaterial_h2yge")
+
+[sub_resource type="Environment" id="Environment_lquwl"]
+background_mode = 2
+sky = SubResource("Sky_1bvp3")
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_h2yge")
+enemy_scene = ExtResource("2_1bvp3")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("PlaneMesh_7mycd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_272bh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("3_lquwl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7779156, 1, 0.4201548)
+
+[node name="EnemySpawner" type="Node3D" parent="."]
+
+[node name="Timer" type="Timer" parent="EnemySpawner"]
+autostart = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_lquwl")
+
+[node name="GameUI" parent="." instance=ExtResource("4_1bvp3")]
