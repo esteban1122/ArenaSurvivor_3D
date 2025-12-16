@@ -1,0 +1,10 @@
+res://ArenaJuego.gd
+res://bullet.gd
+res://player.gd
+res://player.tscn
+res://enemy.gd
+res://main.gd
+res://main.tscn
+res://game_ui.gd
+res://explosion.gd
+res://enemy.tscn

@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://isu6uu1gk85i"]
+
+[ext_resource type="Script" uid="uid://xe025cri56dr" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="PackedScene" uid="uid://r7sqxvoqbk42" path="res://bullet.tscn" id="2_onrkg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_onrkg"]
+albedo_color = Color(0.06052573, 0, 0.70121247, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_onrkg"]
+material = SubResource("StandardMaterial3D_onrkg")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_i3pqv"]
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.20338583)
+script = ExtResource("1_4flbx")
+bullet_scene = ExtResource("2_onrkg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_onrkg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_i3pqv")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 10, 5)

@@ -1,0 +1,15 @@
+GPUParticles3D
+Button
+VBoxContainer
+Label
+ColorRect
+CanvasLayer
+WorldEnvironment
+Timer
+Node3D
+DirectionalLight3D
+CollisionShape3D
+MeshInstance3D
+StaticBody3D
+CharacterBody3D
+Camera3D
