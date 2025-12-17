@@ -1,13 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://isu6uu1gk85i"]
+[gd_scene load_steps=10 format=3 uid="uid://isu6uu1gk85i"]
 
 [ext_resource type="Script" uid="uid://xe025cri56dr" path="res://player.gd" id="1_4flbx"]
 [ext_resource type="PackedScene" uid="uid://r7sqxvoqbk42" path="res://bullet.tscn" id="2_onrkg"]
+[ext_resource type="AudioStream" uid="uid://baqqmlr5n03hl" path="res://sounds/shoot.wav" id="3_r5w5b"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_onrkg"]
-albedo_color = Color(0.06052573, 0, 0.70121247, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_body"]
+albedo_color = Color(0.1, 0.7, 0.2, 1)
+metallic_specular = 0.5
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_onrkg"]
-material = SubResource("StandardMaterial3D_onrkg")
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_body"]
+material = SubResource("StandardMaterial3D_body")
+radius = 0.4
+height = 1.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_head"]
+albedo_color = Color(0.8, 0.6, 0.3, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_head"]
+material = SubResource("StandardMaterial3D_head")
+radius = 0.35
+height = 0.7
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_i3pqv"]
 
@@ -15,9 +27,15 @@ material = SubResource("StandardMaterial3D_onrkg")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.20338583)
 script = ExtResource("1_4flbx")
 bullet_scene = ExtResource("2_onrkg")
+shoot_sound = ExtResource("3_r5w5b")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_onrkg")
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+mesh = SubResource("SphereMesh_head")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_i3pqv")

@@ -1,18 +1,45 @@
-[gd_scene load_steps=5 format=3 uid="uid://1ao4e7r6onpc"]
+[gd_scene load_steps=10 format=3 uid="uid://1ao4e7r6onpc"]
 
 [ext_resource type="Script" uid="uid://vaffcrg66ote" path="res://enemy.gd" id="1_7k104"]
 [ext_resource type="PackedScene" uid="uid://h1iudhn4sw61" path="res://explosion.tscn" id="2_4gyqm"]
+[ext_resource type="AudioStream" uid="uid://d0eo75h5nfwmg" path="res://sounds/enemy_hurt.wav" id="3_7x2vf"]
+[ext_resource type="AudioStream" uid="uid://bwdajd3m0dch" path="res://sounds/enemy_death.wav" id="4_plb5p"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_4gyqm"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_body"]
+albedo_color = Color(0.8, 0.1, 0.1, 1)
+metallic_specular = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_body"]
+material = SubResource("StandardMaterial3D_body")
+size = Vector3(0.8, 1.0, 0.8)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qi2p4"]
+size = Vector3(0.8, 1.0, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eyes"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_eyes"]
+material = SubResource("StandardMaterial3D_eyes")
+radius = 0.1
+height = 0.2
 
 [node name="Enemy" type="CharacterBody3D" groups=["enemy"]]
 script = ExtResource("1_7k104")
 explosion_scene = ExtResource("2_4gyqm")
+hurt_sound = ExtResource("3_7x2vf")
+death_sound = ExtResource("4_plb5p")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_4gyqm")
+[node name="Body" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_body")
+
+[node name="Eye1" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, 0.2, -0.41)
+mesh = SubResource("SphereMesh_eyes")
+
+[node name="Eye2" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, 0.2, -0.41)
+mesh = SubResource("SphereMesh_eyes")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_qi2p4")
