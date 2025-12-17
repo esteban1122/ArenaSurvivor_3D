@@ -1,12 +1,21 @@
 extends CharacterBody3D
 
 @export var speed = 8.0
-@export var bullet_scene: PackedScene 
+@export var bullet_scene: PackedScene
+@export var shoot_sound: AudioStream
 
 var attack_timer = 0.0
+var audio_player: AudioStreamPlayer
 
 func _ready():
 	ArenaJuego.register_player(self)
+	
+	# Crear nodo de audio para disparos
+	audio_player = AudioStreamPlayer.new()
+	add_child(audio_player)
+	if shoot_sound:
+		audio_player.stream = shoot_sound
+	audio_player.volume_db = -10
 
 func _physics_process(delta):
 	# Movimiento
@@ -38,6 +47,10 @@ func _auto_fire():
 		if dist < min_dist:
 			min_dist = dist
 			closest = enemy
+	
+	# Reproducir sonido de disparo
+	if audio_player and shoot_sound:
+		audio_player.play()
 			
 	# DISPARO MÚLTIPLE (Bucle for)
 	if bullet_scene:
